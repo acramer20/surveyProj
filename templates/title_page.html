@@ -1,0 +1,12 @@
+{%extends 'base.html'%}
+{%block title%}Start Page{%endblock%}
+    {%block content%}
+    <h1>{{survey['satisfaction'].title}}</h1>
+    <div>
+    <p>{{survey['satisfaction'].instructions}}</p>
+    <form action="/start" method="POST">
+        <label for="start_survey">Start Survey</label>
+        <button id="start_survey">Start</button>
+    </form>
+    </div>
+    {%endblock%}
