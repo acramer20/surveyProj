@@ -26,15 +26,33 @@ def question_0():
 def show_question(quid):
 
     ques=satisfaction_survey.questions[quid]
+
+    if (len(responses) != quid):
+        # Trying to access questions out of order.
+        flash(f"Invalid question id: {quid}.")
+        return redirect(f"/questions/{len(responses)}")
+    
     
     return render_template('question.html', ques=ques)
 
 @app.route('/answer', methods=["POST"])
 def save_answer():
-    responses.append(request.args('answer'))
-    quid = 1
+    """saving answer to list and redirecting to next question"""
+    responses.append(request.form['answer'])
+    quid = len(responses)
 
-    return redirect('questions/{quid}')
+    if len(responses) == 4:
+        return redirect ('/complete')
+    else:
+        return redirect(f'questions/{quid}')\
+
+@app.route('/complete')
+def complete_survey():
+    """Just letting them know they are done with survey"""
+    return render_template('complete.html')
+
+
+    
 
 
     # example
