@@ -25,12 +25,16 @@ def question_0():
 @app.route('/questions/<int:quid>')
 def show_question(quid):
 
-    ques=satisfaction_survey.questions[quid]
 
     if (len(responses) != quid):
         # Trying to access questions out of order.
         flash(f"Invalid question id: {quid}.")
         return redirect(f"/questions/{len(responses)}")
+
+    if len(responses) == len(satisfaction_survey.questions):
+        return redirect("/complete")
+    
+    ques=satisfaction_survey.questions[quid]
     
     
     return render_template('question.html', ques=ques)
